@@ -4,8 +4,10 @@ import java.util.List;
 
 import javax.swing.*;
 
+import model.dungeon.Directions;
 import model.dungeon.DungeonModel;
 import model.dungeon.Model;
+import view.DungeonForm;
 import view.DungeonView;
 import view.DungeonWindow;
 import view.SpecsForm;
@@ -13,12 +15,12 @@ import view.SpecsForm;
 public class DungeonControllerImpl implements Features {
 
   private Model model;
+  private DungeonForm formView;
   private DungeonView view;
 
-  public DungeonControllerImpl(DungeonView v) {
-    view = v;
-    view.setFeatures(this);
-    initView();
+  public DungeonControllerImpl(DungeonForm v) {
+    formView = v;
+    formView.setFeatures(this);
   }
 
   @Override
@@ -28,14 +30,10 @@ public class DungeonControllerImpl implements Features {
     }
   }
 
-  public void initView() {
-//    view.getSub().addActionListener(e -> createModel());
-  }
-
   public void createModel() {
-    List<Integer> specs = view.getSpecs();
+    List<Integer> specs = formView.getSpecs();
     model = new DungeonModel(new DungeonModel(4,5,2,
-            1,true,20,3));
+            1,true,50,2));
 //    if (specs.get(3) == 1) {
 //      model = new DungeonModel(new DungeonModel(specs.get(0), specs.get(1),
 //              specs.get(2), 1, true, specs.get(4), specs.get(5)));
@@ -44,8 +42,12 @@ public class DungeonControllerImpl implements Features {
 //      model = new DungeonModel(new DungeonModel(specs.get(0), specs.get(1),
 //              specs.get(2), 1, false, specs.get(4), specs.get(5)));
 //    }
-    this.view = new DungeonWindow("Dungeon Game");
+    this.formView.hideWindow();
+    this.view = new DungeonWindow("Dungeon Game", model);
+    view.display(
+        model.getCurrentLocation(), model.getArrowAtCurrentLoc(), model.detectSmell(), true);
     view.setFeatures(this);
+    view.resetFocus();
   }
 
   @Override
@@ -62,25 +64,62 @@ public class DungeonControllerImpl implements Features {
 
   @Override
   public void restartSameGame() {
+    this.view.hideWindow();
     createModel();
   }
 
   @Override
   public void restartNewGame() {
+    this.view.hideWindow();
     new DungeonControllerImpl(new SpecsForm("MVC Game"));
-//    this.view = new SpecsForm("MVC Game");
   }
 
   @Override
   public void getInformation() {
-    String info =    "Number of Rows:          " + model.getRows()
-            + "\n" + "Number of Columns:     " + model.getCols()
-            + "\n" + "Interconnectivity:          " + model.interConnectivity();
     String type = model.getDungeonLabel() ? "Wrapping" : "Non Wrapping";
-    String display = info
-            + "\n" + "Dungeon Type:           " + type
-            + "\n" + "Amount distributed:     " + model.getAmount()
-            + "\n" + "Number of Monsters:    " + model.getNumOtyughs();
-    JOptionPane.showMessageDialog(null,display);
+    view.displayInfo(model.getRows(),model.getCols(),model.interConnectivity(),
+            type, model.getAmount(),model.getNumOtyughs());
+  }
+
+  @Override
+  public void shoot(Directions direction, int distance) {
+    int res = model.shoot(direction,distance);
+    view.shootInfo(res);
+    System.out.println();
+  }
+
+  @Override
+  public void move(Directions direction) {
+    boolean status = model.makeMove(direction);
+    view.display(model.getCurrentLocation(),model.getArrowAtCurrentLoc(),model.detectSmell(),status);
+    view.refresh();
+  }
+
+  @Override
+  public void pickTreasure() {
+    boolean flag = model.pickTreasure();
+    if (flag) {
+      view.addLabel("Treasure picked!");
+    }
+    else {
+      view.addLabel("No Treasure to pick!");
+    }
+  }
+
+  @Override
+  public void pickArrow() {
+    boolean flag = model.pickArrow();
+    if (flag) {
+      view.addLabel("Arrow picked!");
+    }
+    else {
+      view.addLabel("No arrows to pick!");
+    }
+  }
+
+  @Override
+  public void getDescription() {
+    view.getDescription(model.getDescription());
+    System.out.println(model.getDescription());
   }
 }

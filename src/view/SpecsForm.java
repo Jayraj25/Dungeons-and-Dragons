@@ -3,12 +3,15 @@ package view;
 import java.awt.Container;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import javax.swing.*;
 
 import controller.Features;
+import model.dungeon.Directions;
+import model.dungeon.TreasuresTypes;
 
-public class SpecsForm extends JFrame implements DungeonView {
+public class SpecsForm extends JFrame implements DungeonForm {
 
   private final JRadioButton wrappingType;
   private final JTextField rowsTextField;
@@ -133,5 +136,16 @@ public class SpecsForm extends JFrame implements DungeonView {
   @Override
   public void setFeatures(Features f) {
     sub.addActionListener(e -> f.createModel());
+  }
+
+  @Override
+  public void hideWindow() {
+    dispose();
+  }
+
+  @Override
+  public void resetFocus() {
+    this.setFocusable(true);
+    this.requestFocus();
   }
 }

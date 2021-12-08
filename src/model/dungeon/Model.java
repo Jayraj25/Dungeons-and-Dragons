@@ -101,6 +101,12 @@ public interface Model {
   Map<Integer, Map<List<Directions>, List<TreasuresTypes>>> getCurrentLocation();
 
   /**
+   * Get the row and column index of the player's current location.
+   * @return row index at 0th index and column index at 1st index in the list.
+   */
+  List<Integer> getPlayerLocRowColIndex();
+
+  /**
    * Get the starting cave location.
    * @return the location label
    */
