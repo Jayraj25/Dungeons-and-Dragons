@@ -16,6 +16,8 @@ import java.util.Objects;
 class PlayerGenerator implements Player {
 
   private final List<Location> locationList;
+  private final int cols;
+  private final int rows;
   private Location currentLocation;
   private final Map<Integer, List<Integer>> actualPaths;
   private Location lastLocation;
@@ -38,6 +40,8 @@ class PlayerGenerator implements Player {
     this.lastLocation = locationList.get(dungeon.getStart());
     this.currentLocation = locationList.get(dungeon.getStart());
     this.actualPaths = dungeon.getActualPaths();
+    this.rows = dungeon.getRows();
+    this.cols = dungeon.getCols();
     this.numOfArrows = 3;
     this.end = dungeon.getEnd();
     this.treasurePickedMap = new HashMap<>();
@@ -301,6 +305,26 @@ class PlayerGenerator implements Player {
     temp2.put(currentLocation.getDirectionsList(),currentLocation.getTreasuresList());
     temp1.put(currentLocation.getLabel(), temp2);
     return temp1;
+  }
+
+  @Override
+  public List<Integer> getCurrentLocRowIndex() {
+    int rowIndex = 0;
+    int colIndex = 0;
+    int count = 0;
+    for (int i = 0; i < rows; i++) {
+      for (int j = 0; j < cols; j++) {
+        if (count == currentLocation.getLabel()) {
+          rowIndex = i;
+          colIndex = j;
+        }
+        count++;
+      }
+    }
+    List<Integer> indexes = new ArrayList<>();
+    indexes.add(rowIndex);
+    indexes.add(colIndex);
+    return indexes;
   }
 
   @Override

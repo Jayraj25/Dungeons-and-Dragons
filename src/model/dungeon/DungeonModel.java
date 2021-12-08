@@ -159,6 +159,11 @@ public class DungeonModel implements Model {
   }
 
   @Override
+  public List<Integer> getPlayerLocRowColIndex() {
+    return this.player.getCurrentLocRowIndex();
+  }
+
+  @Override
   public int getStart() {
     return this.start;
   }

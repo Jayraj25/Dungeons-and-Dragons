@@ -60,6 +60,12 @@ interface Player {
   Map<Integer, Map<List<Directions>, List<TreasuresTypes>>> getCurrentLocation();
 
   /**
+   * Get the row and column index of the player's current location.
+   * @return row index at 0th index and column index at 1st index in the list.
+   */
+  List<Integer> getCurrentLocRowIndex();
+
+  /**
    * Check if the player is alive or not.
    * @return true if alive else false.
    */
