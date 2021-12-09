@@ -1,11 +1,8 @@
 package view;
 
-import java.util.List;
-import java.util.Map;
-
 import controller.Features;
-import model.dungeon.Directions;
-import model.dungeon.TreasuresTypes;
+
+import java.util.List;
 
 /**
  * The initial view form to get the dungeon specifications.

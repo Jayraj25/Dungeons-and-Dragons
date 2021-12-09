@@ -125,6 +125,24 @@ public interface Model {
   Dungeon getDungeon();
 
   /**
+   * Detect if pit is present or not.
+   * @return true if present or false.
+   */
+  boolean detectPit();
+
+  /**
+   * Check if treasure stolen by thief.
+   * @return true if stolen or not.
+   */
+  boolean isTreasureStolen();
+
+  /**
+   * Check if player killed by pit.
+   * @return true if killed by pit else false.
+   */
+  boolean isKilledByPit();
+
+  /**
    * Get the player from the dungeon.
    * @return the player.
    */
@@ -153,4 +171,16 @@ public interface Model {
    * @return the list
    */
   List<Location> getLocationList();
+
+  /**
+   * Get number of pits in the dungeon.
+   * @return number of pits.
+   */
+  int getNumPits();
+
+  /**
+   * Get number of thieves in the dungeon.
+   * @return number of thieves.
+   */
+  int getNumThieves();
 }

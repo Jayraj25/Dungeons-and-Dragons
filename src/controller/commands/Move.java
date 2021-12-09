@@ -37,6 +37,9 @@ public class Move implements ICommand<String> {
     boolean temp = m.makeMove(directions);
     StringBuilder res = new StringBuilder();
     if (temp) {
+      if (m.isTreasureStolen()) {
+        res.append("Thief encountered and your treasure was stolen!").append("\n");
+      }
       res.append("Move made successfully").append("\n");
     }
     else {
