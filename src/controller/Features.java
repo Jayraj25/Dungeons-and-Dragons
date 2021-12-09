@@ -61,4 +61,11 @@ public interface Features {
    * @param direction Direction to move
    */
   void move(Directions direction);
+
+  /**
+   * Move the player using mouse click.
+   * @param x the x coordinate of mouse.
+   * @param y the y coordinate of mouse.
+   */
+  void moveClickListener(int x, int y);
 }

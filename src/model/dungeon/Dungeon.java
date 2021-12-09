@@ -51,4 +51,16 @@ interface Dungeon {
    * @return the list of caves.
    */
   List<Location> makeListOfCaves();
+
+  /**
+   * Get number of pits.
+   * @return number of pits.
+   */
+  int getNumPits();
+
+  /**
+   * Get number of thieves.
+   * @return number of thieves.
+   */
+  int getNumThieves();
 }

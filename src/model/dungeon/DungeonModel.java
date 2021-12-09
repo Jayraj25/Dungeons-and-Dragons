@@ -33,10 +33,10 @@ public class DungeonModel implements Model {
    * @throws IllegalArgumentException if invalid rows/cols/interconnectivity/label provided
    */
   public DungeonModel(int rows, int cols, int interconnectivity, int randomseed,
-                      boolean dungeonLabel, int amount, int numOtyughs)
+                      boolean dungeonLabel, int amount, int numOtyughs, int numPits, int numThieves)
           throws IllegalArgumentException {
-    if (rows < 1 || cols < 1) {
-      throw new IllegalArgumentException("Rows and columns cannot be less than 1");
+    if (rows < 3 || cols < 3) {
+      throw new IllegalArgumentException("Rows and columns cannot be less than 3");
     }
     if (rows * cols < 5) {
       throw new IllegalArgumentException("The product of rows and columns should be at least 5 "
@@ -51,6 +51,12 @@ public class DungeonModel implements Model {
     if (numOtyughs < 1 || numOtyughs > rows * cols) {
       throw new IllegalArgumentException("Invalid number of monsters provided");
     }
+    if (numPits < 0) {
+      throw new IllegalArgumentException("Pits cannot be less than 0");
+    }
+    if (numThieves < 0) {
+      throw new IllegalArgumentException("Thieves cannot be less than 0");
+    }
     this.rows = rows;
     this.cols = cols;
     this.interconnectivity = interconnectivity;
@@ -59,11 +65,11 @@ public class DungeonModel implements Model {
     this.numOtyughs = numOtyughs;
     if (dungeonLabel) {
       this.dungeon = new DungeonMaker(rows, cols, interconnectivity,
-              randomseed, "Wrapping", amount, numOtyughs);
+              randomseed, "Wrapping", amount, numOtyughs, numPits, numThieves);
     }
     else {
       this.dungeon = new DungeonMaker(rows, cols, interconnectivity,
-              randomseed, "NonWrapping", amount, numOtyughs);
+              randomseed, "NonWrapping", amount, numOtyughs, numPits, numThieves);
     }
     this.start = this.dungeon.getStart();
     this.end = this.dungeon.getEnd();
@@ -179,6 +185,21 @@ public class DungeonModel implements Model {
   }
 
   @Override
+  public boolean detectPit() {
+    return this.player.detectPit();
+  }
+
+  @Override
+  public boolean isTreasureStolen() {
+    return this.player.isTreasureStolen();
+  }
+
+  @Override
+  public boolean isKilledByPit() {
+    return this.player.isKilledByPit();
+  }
+
+  @Override
   public Player getPlayer() {
     return this.player;
   }
@@ -206,5 +227,15 @@ public class DungeonModel implements Model {
   @Override
   public List<Location> getLocationList() {
     return this.dungeon.getLocationList();
+  }
+
+  @Override
+  public int getNumPits() {
+    return this.dungeon.getNumPits();
+  }
+
+  @Override
+  public int getNumThieves() {
+    return this.dungeon.getNumThieves();
   }
 }

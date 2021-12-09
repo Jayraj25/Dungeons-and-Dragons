@@ -43,6 +43,17 @@ public interface Location {
   void destroyMonster();
 
   /**
+   * add a thief to the location.
+   */
+  void setThiefPresent();
+
+  /**
+   * Check if thief is present or not.
+   * @return true if thief present else false.
+   */
+  boolean isThiefPresent();
+
+  /**
    * Get the number of arrows in the cave.
    * @return arrows count
    */
@@ -116,4 +127,15 @@ public interface Location {
    * @return array of YDirection.
    */
   int[] getDirectionY();
+
+  /**
+   * Set the pit present to true.
+   */
+  void setPitPresent();
+
+  /**
+   * Check if this location contains a pit or not.
+   * @return true if pit present else false.
+   */
+  boolean isPitPresent();
 }

@@ -25,7 +25,7 @@ public class ControllerDriver {
 //      Model m = new DungeonModel(new DungeonModel(row,col,connectivity,
              // -1,type,amountTreasure,numOtyughs));
       Model m = new DungeonModel(new DungeonModel(5,6,2,
-             1,true,50,10));
+             1,true,50,10,1,1));
       Readable in = new InputStreamReader(System.in);
       DungeonController control = new DungeonConsoleController(in,System.out);
       control.playGame(m);

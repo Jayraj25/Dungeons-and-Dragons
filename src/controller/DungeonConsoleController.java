@@ -80,8 +80,12 @@ public class DungeonConsoleController implements DungeonController {
           out.append(ie.getMessage());
         }
       }
-      if (!m.isPlayerAlive()) {
+      if (!m.isPlayerAlive() && !m.isKilledByPit()) {
         out.append("\nChomp, chomp, chomp, you are eaten by an Otyugh!\n");
+        out.append("Game over!\n");
+      }
+      if (!m.isPlayerAlive() && m.isKilledByPit()) {
+        out.append("\nYou fell into the pit!\n");
         out.append("Game over!\n");
       }
       if (m.isReachedDest() && m.isPlayerAlive()) {
@@ -159,6 +163,15 @@ public class DungeonConsoleController implements DungeonController {
       try {
         out.append("You smell something less pungent nearby!!\n\n");
       } catch (IOException e) {
+        e.printStackTrace();
+      }
+    }
+
+    if (m.detectPit()) {
+      try {
+        out.append("Beware!! A pit is nearby\n");
+      }
+      catch (IOException e) {
         e.printStackTrace();
       }
     }

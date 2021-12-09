@@ -1,10 +1,10 @@
 package view;
 
-import java.util.List;
-import java.util.Map;
-
 import model.dungeon.Directions;
 import model.dungeon.TreasuresTypes;
+
+import java.util.List;
+import java.util.Map;
 
 /**
  * Create the different views for dungeon like specifications form and dungeon window.
@@ -42,7 +42,8 @@ public interface DungeonView extends DungeonForm {
    * @param amount the percentage of treasure distributed
    * @param numOtyughs number of monsters.
    */
-  void displayInfo(int rows, int cols, int interConnectivity, String type, int amount, int numOtyughs);
+  void displayInfo(int rows, int cols, int interConnectivity, String type,
+                   int amount, int numOtyughs);
 
   /**
    * Refresh the contents and repaint.
@@ -54,4 +55,24 @@ public interface DungeonView extends DungeonForm {
    * @param res the result from controller.
    */
   void shootInfo(int res);
+
+  /**
+   * Display the message that player has won.
+   */
+  void displayWinInfo();
+
+  /**
+   * Display message that player was killed by monster.
+   */
+  void displayLoseInfo();
+
+  /**
+   * Display popup if pit is nearby within 1 units.
+   */
+  void displayPitInfo();
+
+  /**
+   * Player killed by pit info.
+   */
+  void displayLoseInfoByPit();
 }

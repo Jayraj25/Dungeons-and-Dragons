@@ -26,6 +26,8 @@ class PlayerGenerator implements Player {
   private final RandomGenerator rand;
   private final int end;
   private boolean isAlive;
+  private boolean isKilledByPit;
+  private boolean treasureStealed;
 
   /**
    * Constructs the player with a given name.
@@ -46,6 +48,8 @@ class PlayerGenerator implements Player {
     this.end = dungeon.getEnd();
     this.treasurePickedMap = new HashMap<>();
     this.isAlive = true;
+    this.isKilledByPit = false;
+    this.treasureStealed = false;
     for (TreasuresTypes t : TreasuresTypes.values()) {
       treasurePickedMap.put(t,0);
     }
@@ -88,6 +92,10 @@ class PlayerGenerator implements Player {
       }
       return flag;
     }
+  }
+
+  private void stealTreasure() {
+    treasurePickedMap.clear();
   }
 
   @Override
@@ -164,6 +172,23 @@ class PlayerGenerator implements Player {
     else {
       return 0;
     }
+  }
+
+  @Override
+  public boolean detectPit() {
+    locationList.forEach(
+            (l) -> l.setVisited(false)
+    );
+    Map<Integer, Integer> distMap = bfsCall(this.currentLocation.getLabel());
+    List<Integer> dist1 = new ArrayList<>();
+    distMap.forEach(
+            (key, value) -> {
+              if (value == 1 && locationList.get(key).isPitPresent()) {
+                dist1.add(key);
+              }
+            }
+    );
+    return !dist1.isEmpty();
   }
 
   @Override
@@ -279,6 +304,16 @@ class PlayerGenerator implements Player {
           survivalChances();
         }
       }
+      else if (this.currentLocation.isPitPresent()) {
+        this.isAlive = false;
+        this.isKilledByPit = true;
+      }
+      else if (this.currentLocation.isThiefPresent()) {
+        this.treasureStealed = true;
+        stealTreasure();
+      } else if (!this.currentLocation.isThiefPresent()) {
+        this.treasureStealed = false;
+      }
       return flag;
     }
     else {
@@ -286,11 +321,23 @@ class PlayerGenerator implements Player {
     }
   }
 
+  @Override
+  public boolean isTreasureStolen() {
+    return this.treasureStealed;
+  }
+
   private void survivalChances() {
     int r = rand.getRandomNumber(0,2);
     if (r == 0) {
       this.isAlive = false;
     }
+  }
+
+
+
+  @Override
+  public boolean isKilledByPit() {
+    return this.isKilledByPit;
   }
 
   @Override

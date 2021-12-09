@@ -19,6 +19,8 @@ class LocationGenerator implements Location {
   private Monsters monsters;
   private boolean monsterAssigned;
   private int monsterHealth;
+  private boolean pitPresent;
+  private boolean thiefPresent;
 
   /**
    * Constructs a location for given position of a 2d array.
@@ -37,6 +39,8 @@ class LocationGenerator implements Location {
     this.arrowsCount = 0;
     this.monsterAssigned = false;
     this.monsters = null;
+    this.thiefPresent = false;
+    this.pitPresent = false;
     this.monsterHealth = 0;
   }
 
@@ -75,6 +79,16 @@ class LocationGenerator implements Location {
     else {
       this.monsters = null;
     }
+  }
+
+  @Override
+  public void setThiefPresent() {
+    this.thiefPresent = true;
+  }
+
+  @Override
+  public boolean isThiefPresent() {
+    return this.thiefPresent;
   }
 
   @Override
@@ -138,6 +152,16 @@ class LocationGenerator implements Location {
   }
 
   @Override
+  public void setPitPresent() {
+    this.pitPresent = true;
+  }
+
+  @Override
+  public boolean isPitPresent() {
+    return pitPresent;
+  }
+
+  @Override
   public String toString() {
     return "Location{"
             + "label=" + this.label
@@ -146,6 +170,8 @@ class LocationGenerator implements Location {
             + ", treasureList=" + this.treasuresTypesList
             + ", numOfArrows=" + this.arrowsCount
             + ", Monster=" + this.monsters
+            + ", Pit=" + this.pitPresent
+            + ", Thief=" + this.thiefPresent
             + '}';
   }
 }

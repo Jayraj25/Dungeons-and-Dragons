@@ -33,6 +33,12 @@ interface Player {
   int detectSmell();
 
   /**
+   * Detect if pit is present or not.
+   * @return true if present else false.
+   */
+  boolean detectPit();
+
+  /**
    * Shoot the arrow to kill the monster.
    * @param dir the direction to shoot
    * @param distance the distance
@@ -46,6 +52,18 @@ interface Player {
    * @return true if move made successfully else false.
    */
   boolean makeMove(Directions direction);
+
+  /**
+   * Treasure is stolen or not by thief.
+   * @return true if treasure stole else false.
+   */
+  boolean isTreasureStolen();
+
+  /**
+   * Check if player killed by pit.
+   * @return true if killed by pit else false.
+   */
+  boolean isKilledByPit();
 
   /**
    * Check if the player has reached the destination.

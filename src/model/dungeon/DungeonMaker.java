@@ -18,6 +18,8 @@ class DungeonMaker implements model.dungeon.Dungeon {
 
   private final int rows;
   private final int cols;
+  private final int numPits;
+  private final int numThieves;
   private final Map<Integer, List<Integer>> actualPaths;
   private final List<model.dungeon.Location> locationList;
   private int pathLength;
@@ -34,13 +36,15 @@ class DungeonMaker implements model.dungeon.Dungeon {
    * @param dungeonLabel the label of whether to make wrapping or non-wrapping dungeon
    */
   public DungeonMaker(int rows, int cols, int interconnectivity, int randomSeed,
-                      String dungeonLabel, int amount, int numOtyughs) {
+                      String dungeonLabel, int amount, int numOtyughs, int numPits, int numThieves) {
     this.rows = rows;
     this.cols = cols;
     model.dungeon.DungeonOperations g = new model.dungeon.DungeonOperations(
             rows, cols, interconnectivity,
             randomSeed, dungeonLabel);
     this.actualPaths = g.mst();
+    this.numPits = numPits;
+    this.numThieves = numThieves;
     this.locationList = g.getLocationList();
     this.pathLength = 0;
     this.rand = new RandomGeneratorImpl(randomSeed); //0
@@ -53,6 +57,42 @@ class DungeonMaker implements model.dungeon.Dungeon {
     addTreasure(amount);
     assignArrows(amount);
     addMonsters(numOtyughs);
+    addPit(numPits);
+    addThief(numThieves);
+  }
+
+  private void addThief(int numThieves) {
+    List<Integer> temp = new ArrayList<>();
+    for (int i = 0; i< numThieves; ) {
+      int randNum1 = rand.getRandomNumber(0, locationList.size() - 1);
+      Location l1 = locationList.get(randNum1);
+      while (l1.getLabel() == end) {
+        randNum1 = rand.getRandomNumber(0, locationList.size() - 1);
+        l1 = locationList.get(randNum1);
+      }
+      if (!temp.contains(l1.getLabel())) {
+        l1.setThiefPresent();
+        temp.add(l1.getLabel());
+        i++;
+      }
+    }
+  }
+
+  private void addPit(int numPits) {
+    List<Integer> temp = new ArrayList<>();
+    for (int i = 0; i< numPits; ) {
+      int randNum1 = rand.getRandomNumber(0, locationList.size() - 1);
+      Location l1 = locationList.get(randNum1);
+      while (l1.getLabel() == end) {
+        randNum1 = rand.getRandomNumber(0, locationList.size() - 1);
+        l1 = locationList.get(randNum1);
+      }
+      if (!temp.contains(l1.getLabel())) {
+        l1.setPitPresent();
+        temp.add(l1.getLabel());
+        i++;
+      }
+    }
   }
 
   private void addMonsters(int numOtyughs) {
@@ -229,6 +269,16 @@ class DungeonMaker implements model.dungeon.Dungeon {
       }
     }
     return caves;
+  }
+
+  @Override
+  public int getNumPits() {
+    return this.numPits;
+  }
+
+  @Override
+  public int getNumThieves() {
+    return numThieves;
   }
 
   private void assignArrows(int amount) {
