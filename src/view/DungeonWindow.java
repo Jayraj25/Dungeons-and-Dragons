@@ -3,6 +3,7 @@ package view;
 import controller.Features;
 import model.dungeon.Directions;
 import model.dungeon.Model;
+import model.dungeon.ReadOnlyModel;
 import model.dungeon.TreasuresTypes;
 
 import java.awt.Color;
@@ -46,7 +47,7 @@ public class DungeonWindow extends JFrame implements DungeonView {
    * @param title The title of the window
    * @throws HeadlessException exception if no title given
    */
-  public DungeonWindow(String title, Model model) throws HeadlessException {
+  public DungeonWindow(String title, ReadOnlyModel model) throws HeadlessException {
     super(title);
     setBounds(300, 90, 1000, 800);
     setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -377,6 +378,18 @@ public class DungeonWindow extends JFrame implements DungeonView {
                     .getImage().getScaledInstance(40, 40, Image.SCALE_SMOOTH));
     JOptionPane.showMessageDialog(null,info,"You lost",
             JOptionPane.PLAIN_MESSAGE,loser);
+  }
+
+  @Override
+  public void ExitGame() {
+    Object[] options = {"Exit","No"};
+    int res = JOptionPane.showOptionDialog(null,
+            "Are you sure to quit the game?",
+            "Exit Game",JOptionPane.YES_NO_OPTION,JOptionPane.WARNING_MESSAGE,
+            null,options,null);
+    if (res == JOptionPane.YES_OPTION) {
+      System.exit(0);
+    }
   }
 
   @Override

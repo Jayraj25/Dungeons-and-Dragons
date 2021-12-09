@@ -16,14 +16,14 @@ public class ControllerDriver {
    */
   public static void main(String[] args) {
     try {
-//      int row = Integer.parseInt(args[0]);
-//      int col = Integer.parseInt(args[1]);
-//      int connectivity = Integer.parseInt(args[2]);
-//      boolean type = Boolean.parseBoolean(args[3]);
-//      int amountTreasure = Integer.parseInt(args[4]);
-//      int numOtyughs = Integer.parseInt(args[5]);
-//      Model m = new DungeonModel(new DungeonModel(row,col,connectivity,
-             // -1,type,amountTreasure,numOtyughs));
+      // int row = Integer.parseInt(args[0]);
+      // int col = Integer.parseInt(args[1]);
+      // int connectivity = Integer.parseInt(args[2]);
+      // boolean type = Boolean.parseBoolean(args[3]);
+      // int amountTreasure = Integer.parseInt(args[4]);
+      // int numOtyughs = Integer.parseInt(args[5]);
+      // Model m = new DungeonModel(new DungeonModel(row,col,connectivity,
+      // -1,type,amountTreasure,numOtyughs));
       Model m = new DungeonModel(new DungeonModel(5,6,2,
              1,true,50,10,1,1));
       Readable in = new InputStreamReader(System.in);

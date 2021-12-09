@@ -2,6 +2,7 @@ package view;
 
 import model.dungeon.Directions;
 import model.dungeon.Model;
+import model.dungeon.ReadOnlyModel;
 import model.dungeon.TreasuresTypes;
 
 import java.awt.BasicStroke;
@@ -23,14 +24,14 @@ import javax.swing.JPanel;
  */
 public class DungeonPanel extends JPanel {
 
-  private final Model model;
+  private final ReadOnlyModel model;
   private final Map<List<Integer>, String> pathMap = new HashMap<>();
 
   /**
    * Constructs the dungeon panel.
    * @param m the model
    */
-  public DungeonPanel(Model m) {
+  public DungeonPanel(ReadOnlyModel m) {
     this.model = m;
     setPreferredSize(new Dimension(2000,2000));
     this.setLayout(null);

@@ -75,4 +75,9 @@ public interface DungeonView extends DungeonForm {
    * Player killed by pit info.
    */
   void displayLoseInfoByPit();
+
+  /**
+   * Quit the game.
+   */
+  void ExitGame();
 }

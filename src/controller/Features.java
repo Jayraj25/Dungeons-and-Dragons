@@ -4,15 +4,14 @@ import model.dungeon.Directions;
 import model.dungeon.Model;
 
 /**
- * 
+ * The different implemented by the view are called from the controller here.
+ * FUnctions like restart game, create model, getInfo, etc.
  */
 public interface Features {
   /**
    * Exit the program.
    */
   void exitProgram();
-
-  void playGame(Model m);
 
   /**
    * Create the dungeon.

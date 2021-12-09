@@ -8,7 +8,7 @@ import java.util.Map;
  * player is kept in the dungeon. The player can be moved and other operations like shooting,
  * picking up treasure can be done through this model.
  */
-public interface Model {
+public interface Model extends ReadOnlyModel {
 
   /**
    * Get the number of rows of dungeon.
@@ -68,12 +68,6 @@ public interface Model {
   boolean pickArrow();
 
   /**
-   * Detect the smell of the monster if the monster is nearby one or two blocks.
-   * @return 1 if monster present within 1 block, 2 if monster present within 2 blocks else 0.
-   */
-  int detectSmell();
-
-  /**
    * Shoot the arrow to kill the monster.
    * @param dir the direction to shoot
    * @param distance the distance
@@ -87,24 +81,6 @@ public interface Model {
    * @return true if move made successfully else false.
    */
   boolean makeMove(Directions direction);
-
-  /**
-   * Check if the player is still alive or not.
-   * @return true if player alive else false.
-   */
-  boolean isPlayerAlive();
-
-  /**
-   * Get the current location of the player.
-   * @return the location.
-   */
-  Map<Integer, Map<List<Directions>, List<TreasuresTypes>>> getCurrentLocation();
-
-  /**
-   * Get the row and column index of the player's current location.
-   * @return row index at 0th index and column index at 1st index in the list.
-   */
-  List<Integer> getPlayerLocRowColIndex();
 
   /**
    * Get the starting cave location.
@@ -129,18 +105,6 @@ public interface Model {
    * @return true if present or false.
    */
   boolean detectPit();
-
-  /**
-   * Check if treasure stolen by thief.
-   * @return true if stolen or not.
-   */
-  boolean isTreasureStolen();
-
-  /**
-   * Check if player killed by pit.
-   * @return true if killed by pit else false.
-   */
-  boolean isKilledByPit();
 
   /**
    * Get the player from the dungeon.

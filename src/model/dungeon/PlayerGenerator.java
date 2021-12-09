@@ -77,6 +77,11 @@ class PlayerGenerator implements Player {
         flag = false;
       }
       else {
+        if (!treasurePickedMap.containsKey(TreasuresTypes.RUBY)) {
+          for (TreasuresTypes t : TreasuresTypes.values()) {
+            treasurePickedMap.put(t,0);
+          }
+        }
         for (TreasuresTypes t : treasuresList) {
           Integer temp = treasurePickedMap.get(t);
           temp += 1;
