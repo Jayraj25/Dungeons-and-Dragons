@@ -1,4 +1,4 @@
-## Project 5 - MVC Dungeon Game
+## MVC Dungeon Game
 
 ## Overview
 The project is about making full MVC working adventure game. This game generates a dungeon in which a player can move.
